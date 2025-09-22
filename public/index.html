@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Chat</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>💬 Live Chat</h2>
+      <input id="name" placeholder="Skriv dit navn" />
+      <button id="join">Gå online</button>
+      <h3>Online</h3>
+      <ul id="users"></ul>
+    </aside>
+
+    <main>
+      <div id="messages" class="messages"></div>
+      <div id="typing" class="typing" hidden></div>
+      <form id="form">
+        <input id="input" placeholder="Skriv en besked..." disabled />
+        <button>Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
