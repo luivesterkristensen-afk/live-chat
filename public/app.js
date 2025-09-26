@@ -1,5 +1,10 @@
 const socket = io();
 
+
+
+
+const adminCodeInput = document.getElementById("adminCode");
+const adminLoginBtn = document.getElementById("adminLogin");
 const nameInput = document.getElementById('name');
 const joinBtn = document.getElementById('join');
 const usersEl = document.getElementById('users');
@@ -68,3 +73,22 @@ socket.on('typing', ({ name, isTyping }) => {
     typingEl.hidden = true;
   }
 });
+
+// Admin login
+adminLoginBtn.addEventListener("click", () => {
+  const code = adminCodeInput.value.trim();
+  if (code) {
+    socket.emit("admin:login", code);
+    adminCodeInput.value = "";
+  }
+});
+
+// Modtag huge-besked
+socket.on("huge", ({ text }) => {
+  const div = document.createElement("div");
+  div.className = "huge-message";
+  div.textContent = text;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+});
+
