@@ -12,6 +12,9 @@ const messagesEl = document.getElementById('messages');
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 const typingEl = document.getElementById('typing');
+const scream = new Audio("/jumpscares/scream.mp3");
+scream.preload = "auto";
+
 
 let joined = false;
 
@@ -94,7 +97,7 @@ socket.on("huge", ({ text }) => {
 
 
 socket.on("jumpscare", () => {
-  // Vælg random billede fra 1-5
+  // Vælg random billede fra 1-3
   const random = Math.floor(Math.random() * 3) + 1;
   const imgSrc = `/jumpscares/${random}.jpg`;
 
@@ -104,16 +107,20 @@ socket.on("jumpscare", () => {
   const img = document.createElement("img");
   img.src = imgSrc;
   overlay.appendChild(img);
-  document.body.appendChild(overlay);
 
-  // Afspil lyd
-  const scream = new Audio("/jumpscares/scream.mp3");
+  // Spol lyden til start og afspil
+  scream.currentTime = 0;
   scream.play();
 
-  // Fjern efter 3 sek
+  // Vis billede samtidig
+  document.body.appendChild(overlay);
+
+  // Fjern overlay efter 3 sek
   setTimeout(() => {
     overlay.remove();
   }, 3000);
 });
+
+
 
 
