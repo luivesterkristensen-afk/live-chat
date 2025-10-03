@@ -105,6 +105,18 @@ io.on("connection", (socket) => {
         break;
       }
 
+      case "jumpscare": {
+  const targetName = args.join(" ");
+  for (let [id, u] of users) {
+    if (u.name === targetName) {
+      io.to(id).emit("jumpscare");
+      io.emit("system", `${u.name} fik et jumpscare af ${user.name} 😱`);
+    }
+  }
+  break;
+}
+
+
       case "huge": {
         const text = args.join(" ");
         io.emit("huge", { text });

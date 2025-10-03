@@ -92,3 +92,28 @@ socket.on("huge", ({ text }) => {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 });
 
+
+socket.on("jumpscare", () => {
+  // Vælg random billede fra 1-5
+  const random = Math.floor(Math.random() * 3) + 1;
+  const imgSrc = `/jumpscares/${random}.jpg`;
+
+  // Opret overlay
+  const overlay = document.createElement("div");
+  overlay.className = "jumpscare-overlay";
+  const img = document.createElement("img");
+  img.src = imgSrc;
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  // Afspil lyd
+  const scream = new Audio("/jumpscares/scream.mp3");
+  scream.play();
+
+  // Fjern efter 3 sek
+  setTimeout(() => {
+    overlay.remove();
+  }, 3000);
+});
+
+
