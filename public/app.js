@@ -26,6 +26,8 @@ joinBtn.addEventListener('click', () => {
   nameInput.disabled = true;
   joinBtn.disabled = true;
   input.disabled = false;
+  imageUpload.disabled = false;
+
 });
 
 form.addEventListener('submit', (e) => {
