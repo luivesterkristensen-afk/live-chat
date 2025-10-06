@@ -122,5 +122,39 @@ socket.on("jumpscare", () => {
 });
 
 
+const imageUpload = document.getElementById("imageUpload");
+
+// Når der vælges et billede
+imageUpload.addEventListener("change", () => {
+  const file = imageUpload.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const imageData = reader.result; // Base64 data
+    socket.emit("image", imageData);
+  };
+  reader.readAsDataURL(file);
+});
+
+socket.on("image", ({ name, image, time }) => {
+  const div = document.createElement("div");
+  div.className = "message";
+
+  const sender = document.createElement("strong");
+  sender.textContent = name + ": ";
+
+  const img = document.createElement("img");
+  img.src = image;
+  img.className = "chat-image";
+
+  div.appendChild(sender);
+  div.appendChild(img);
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+});
+
+
+
 
 

@@ -48,3 +48,12 @@ form button { padding: 0.5em 1em; }
 }
 
 
+.chat-image {
+  max-width: 250px;
+  max-height: 250px;
+  border-radius: 10px;
+  display: block;
+  margin-top: 5px;
+}
+
+

@@ -24,10 +24,18 @@
     </aside>
 
     <main>
+      <!-- ⚠️ Disclaimer -->
+      <div class="disclaimer">
+        ⚠️ Husk: Folk kan udgive sig for at være nogen andre. Del aldrig personlige oplysninger.
+      </div>
+
       <div id="messages" class="messages"></div>
       <div id="typing" class="typing" hidden></div>
+
+      <!-- Form til tekst og billedupload -->
       <form id="form">
         <input id="input" placeholder="Skriv en besked..." disabled />
+        <input type="file" id="imageUpload" accept="image/*" disabled />
         <button>Send</button>
       </form>
     </main>

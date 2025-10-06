@@ -17,6 +17,21 @@ io.on("connection", (socket) => {
     users.set(socket.id, { name, isAdmin: false, muted: false });
     io.emit("users", Array.from(users.values()).map(u => u.name));
     io.emit("system", `${name} er nu online`);
+
+
+    socket.on("image", (imageData) => {
+  const user = users.get(socket.id);
+  if (!user) return;
+
+  // Tjek mute (kan ikke sende billeder hvis muted)
+  if (user.muted && !user.isAdmin) {
+    socket.emit("system", "❌ Du er muted og kan ikke sende billeder.");
+    return;
+  }
+
+  io.emit("image", { name: user.name, image: imageData, time: new Date().toISOString() });
+});
+
   });
 
   // Admin login
