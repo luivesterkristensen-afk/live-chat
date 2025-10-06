@@ -72,7 +72,7 @@ socket.on('users', (list) => {
 
 socket.on('typing', ({ name, isTyping }) => {
   if (isTyping) {
-    typingEl.textContent = `${name} skriver...`;
+    typingEl.textContent = `${name} is typing...`;
     typingEl.hidden = false;
   } else {
     typingEl.hidden = true;

@@ -16,7 +16,7 @@ io.on("connection", (socket) => {
   socket.on("join", (name) => {
     users.set(socket.id, { name, isAdmin: false, muted: false });
     io.emit("users", Array.from(users.values()).map(u => u.name));
-    io.emit("system", `${name} er nu online`);
+    io.emit("system", `${name} is now online`);
 
 
     socket.on("image", (imageData) => {
@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
 
   // Tjek mute (kan ikke sende billeder hvis muted)
   if (user.muted && !user.isAdmin) {
-    socket.emit("system", "❌ Du er muted og kan ikke sende billeder.");
+    socket.emit("system", "❌ You are muted");
     return;
   }
 
@@ -38,9 +38,9 @@ io.on("connection", (socket) => {
   socket.on("admin:login", (code) => {
     if (code === ADMIN_CODE && users.has(socket.id)) {
       users.get(socket.id).isAdmin = true;
-      socket.emit("system", "✅ Du er nu admin!");
+      socket.emit("system", "✅ You're now admin!");
     } else {
-      socket.emit("system", "❌ Forkert kode.");
+      socket.emit("system", "❌ Wrong password.");
     }
   });
 
@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
 
     // Hvis muted → kan ikke skrive (medmindre admin)
     if (user.muted && !user.isAdmin) {
-      socket.emit("system", "❌ Du er muted og kan ikke skrive.");
+      socket.emit("system", "❌ You are muted");
       return;
     }
 
@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
     if (user) {
       users.delete(socket.id);
       io.emit("users", Array.from(users.values()).map(u => u.name));
-      io.emit("system", `${user.name} gik offline`);
+      io.emit("system", `${user.name} went offline`);
     }
   });
 
@@ -90,11 +90,11 @@ io.on("connection", (socket) => {
       case "kick": {
         for (let [id, u] of users) {
           if (u.name === targetName) {
-            io.to(id).emit("system", "🚪 Du er blevet smidt af chatten!");
+            io.to(id).emit("system", "🚪 You got kicked out!");
             io.to(id).disconnectSockets(true);
             users.delete(id);
             io.emit("users", Array.from(users.values()).map(u => u.name));
-            io.emit("system", `${targetName} blev smidt ud af ${user.name}`);
+            io.emit("system", `${targetName} got kicked out by ${user.name}`);
           }
         }
         break;
@@ -104,7 +104,7 @@ io.on("connection", (socket) => {
         for (let u of users.values()) {
           if (u.name === targetName) {
             u.muted = true;
-            io.emit("system", `${targetName} er muted af ${user.name}`);
+            io.emit("system", `${targetName} got muted by ${user.name}`);
           }
         }
         break;
@@ -114,7 +114,7 @@ io.on("connection", (socket) => {
         for (let u of users.values()) {
           if (u.name === targetName) {
             u.muted = false;
-            io.emit("system", `${targetName} er unmuted af ${user.name}`);
+            io.emit("system", `${targetName} got unmuted by ${user.name}`);
           }
         }
         break;
@@ -125,7 +125,7 @@ io.on("connection", (socket) => {
   for (let [id, u] of users) {
     if (u.name === targetName) {
       io.to(id).emit("jumpscare");
-      io.emit("system", `${u.name} fik et jumpscare af ${user.name} 😱`);
+      io.emit("system", `${u.name} got a jumscare from ${user.name} 😱`);
     }
   }
   break;
@@ -139,7 +139,7 @@ io.on("connection", (socket) => {
       }
 
       default:
-        socket.emit("system", `Ukendt kommando: /${command}`);
+        socket.emit("system", `Unknown command: /${command}`);
     }
   }
 });
