@@ -57,3 +57,18 @@ form button { padding: 0.5em 1em; }
 }
 
 
+.logo-title {
+  display: flex;
+  align-items: center;   /* centrerer logo og tekst lodret */
+  justify-content: center; /* centrerer det hele i midten */
+  gap: 10px;              /* lidt afstand mellem logo og tekst */
+  font-size: 1.6rem;      /* gør teksten lidt større */
+  margin-bottom: 10px;
+}
+
+.logo-icon {
+  width: 48px;   /* større logo */
+  height: 48px;
+}
+
+
